@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/manifest.json">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+	<h1>Test HTTPS website</h1>
+	<p>Proxy server. This is a test.</p>
+	<input id="address" type="text">
+	<p id="out1"></p>
+	<iframe id="out2" sandbox="allow-forms" style="width: 640px; height: 480px"></iframe>
+	<script type="text/javascript">
+		const select = s => document.querySelector(s);
+		const e = select("#address");
+		const out1 = select("#out1");
+		const out2 = select("#out2");
+
+		e.addEventListener("change", () => 
+		{
+			let url = e.value;
+			let req = new XMLHttpRequest();
+			req.onreadystatechange = function()
+			{
+				if(req.readyState !== XMLHttpRequest.DONE || req.status !== 200)
+					return;
+				out1.textContent = "Response received.";
+				console.log(req.responseText);
+				let htmltoinsert = '<base href="' + url + '">';
+				let orig = req.responseText;
+				let idx = orig.match(/<head>/).index;
+				let final = orig.slice(0, idx + 6) + htmltoinsert + orig.slice(idx + 6);
+				out2.srcdoc = final;
+			}
+			req.open('GET', "https://localhost:8000/" + url);
+			req.send();
+			out1.textContent = "Request sent.";
+		});
+	</script>
+</body>
+</html>

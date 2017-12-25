@@ -1,0 +1,12 @@
+{
+  "name": "proxy",
+  "version": "1.0.0",
+  "description": "proxy server",
+  "main": "proxy.js",
+  "scripts": {
+    "start": "node proxy.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cooler",
+  "license": "ISC"
+}
