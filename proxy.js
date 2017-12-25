@@ -2,9 +2,15 @@ const https = require('https');
 const fs = require('fs');
 const cout = console.log;
 
+/*
 const options = {
   key: fs.readFileSync('localhost-privkey.pem'),
   cert: fs.readFileSync('localhost-cert.pem')
+};
+*/
+const options = {
+  key: process.env.PRIVKEY,
+  cert: process.env.CERT
 };
 
 https.createServer(options, (req, res) => {
@@ -50,4 +56,4 @@ https.createServer(options, (req, res) => {
   		});
 	}).on('error', err => {console.error(`Got error: ${err.message}`);});
   }
-}).listen(8000);
+}).listen(process.env.PORT);
