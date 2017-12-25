@@ -37,7 +37,7 @@
 				let final = orig.slice(0, idx + 6) + htmltoinsert + orig.slice(idx + 6);
 				out2.srcdoc = final;
 			}
-			req.open('GET', "https://localhost:8000/" + url);
+			req.open('GET', "https://securetest-proxynodejs.1d35.starter-us-east-1.openshiftapps.com/" + url);
 			req.send();
 			out1.textContent = "Request sent.";
 		});
